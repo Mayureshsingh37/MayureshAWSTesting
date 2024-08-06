@@ -1,0 +1,18 @@
+deploy:
+  needs: [test]
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
+
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: MayureshTestingPythonEnvironment
+        environment_name: MayureshTestingPythonEnvironment-env
+        version_label: 12348
+        region: "us-east-2"
+        deployment_package: "."
